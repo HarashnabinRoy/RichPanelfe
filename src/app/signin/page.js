@@ -1,56 +1,22 @@
-// import PlanSelector from "./components/planSelector"
-// import React from "react"
-
-// export default function Home() {
-//   return (
-//     <div>Hello World!
-//       <div><PlanSelector /></div>
-//     </div>
-//   )
-// }
-
 'use client'
 import Link from "next/link";
 import React,{ useState } from "react";
-import axios from "axios";
-import { useRouter } from "next/navigation";
 
 
 
-export default function Home() {
+export default function Signin() {
 
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
-  const router = useRouter();
 
-  // const handleSignUp = () => {
-  //   console.log('Name:', name);
-  //   console.log('Email:', email);
-  //   console.log('Password:', password);
-  //   console.log('Remember Me:', rememberMe);
-  // };
-
-  const handleSignUp = async (e) => {
-    e.preventDefault();
-    try {
-      // console.log(name,email,password);
-      const response = await axios.post('https://richpanel-apis.onrender.com/api/user/signUp', {
-        name: name,
-        email: email,
-        password: password,
-
-      });
-      console.log(response)
-      if (response.status === 201) {
-        router.push('/login');
-        // console.log("Test");
-      }
-    } catch (error) {
-      console.error('Login error:', error.response.data);
-    }
+  const handleSignUp = () => {
+    console.log('Name:', name);
+    console.log('Email:', email);
+    console.log('Password:', password);
+    console.log('Remember Me:', rememberMe);
   };
 
 
@@ -58,9 +24,6 @@ export default function Home() {
     <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center">
       <div className="flex bg-white rounded-2xl p-12 flex-col">
         <div className="flex justify-center mb-6 text-xl">Create Account</div>
-        <form onSubmit={handleSignUp}>
-
-
         <div className="mb-4">
           <label className="block text-sm font-medium text-gray-700 mb-1">Name</label>
           <input 
@@ -103,18 +66,17 @@ export default function Home() {
           </label>
         </div>
 
-        {/* <Link href="plans"> */}
-          <button 
+        <Link href="plans">
+          <button
             className="bg-[#2B4C8C] text-white px-4 py-2 w-full" 
-            type="submit"
+            onClick={handleSignUp}
           >
             Sign Up
           </button>
-        {/* </Link> */}
-        </form>
+        </Link>
 
 
-        <div className="flex justify-center mt-6 text-xs">Already have an account?<Link href="login" className="ml-[4px] text-[#2B4C8C]">Login</Link></div>
+        <div className="flex justify-center mt-6 text-xs">Already have an account?<Link href="login_app" className="ml-[4px] text-[#2B4C8C]">Login</Link></div>
 
       </div>
     </div>
