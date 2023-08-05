@@ -1,16 +1,27 @@
 'use client'
 import Link from "next/link";
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
 export default function Login() {
+    // const rememberCheck = useRef(null);
 
-    const [email, setEmail] = useState('');
-    const [password, setPassword] = useState('');
+    const [email, setEmail] = useState(localStorage.getItem("my-email") || "");
+    const [password, setPassword] = useState(localStorage.getItem("my-password") || "");
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
 
+    // const handleRememberMe = () => {
+    //   if(rememberCheck.current.checked) {
+    //     localStorage.setItem("my-email", email);
+    //     localStorage.setItem("my-password", password);
+    //   } 
+    //   else {
+    //     localStorage.setItem("my-email", "");
+    //     localStorage.setItem("my-password", "");
+    //   }
+    // }
 
     const handleLogin = async (e) => {
       e.preventDefault();
@@ -25,7 +36,11 @@ export default function Login() {
 
 
         if (response.data.token) {
-          router.push('/plans')
+          router.push('/plans');
+          // if(rememberMe){
+          //   handleRememberMe();
+          // }
+
         }
         localStorage.setItem("authorization", JSON.stringify(response.data.token));
         localStorage.setItem("userId", JSON.stringify(response.data.userId));
@@ -66,6 +81,7 @@ export default function Login() {
                 className="mr-2"
                 value={rememberMe}
                 onChange={(e) => setRememberMe(e.target.value)}
+                
               />
               <span className="text-sm text-gray-700">Remember me</span>
             </label>

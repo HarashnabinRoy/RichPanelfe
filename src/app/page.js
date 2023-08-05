@@ -1,14 +1,3 @@
-// import PlanSelector from "./components/planSelector"
-// import React from "react"
-
-// export default function Home() {
-//   return (
-//     <div>Hello World!
-//       <div><PlanSelector /></div>
-//     </div>
-//   )
-// }
-
 'use client'
 import Link from "next/link";
 import React,{ useState } from "react";
@@ -25,13 +14,6 @@ export default function Home() {
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
   const router = useRouter();
-
-  // const handleSignUp = () => {
-  //   console.log('Name:', name);
-  //   console.log('Email:', email);
-  //   console.log('Password:', password);
-  //   console.log('Remember Me:', rememberMe);
-  // };
 
   const handleSignUp = async (e) => {
     e.preventDefault();
