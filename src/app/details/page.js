@@ -46,9 +46,6 @@ export default function Details() {
             setPlanType(response.data.data.planType);
             setStartDate(response.data.data.startDate);
             setEndDate(response.data.data.expiryDate);
-            
-
-        
             setLoading(false);
         } 
         

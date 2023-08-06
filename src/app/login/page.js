@@ -106,7 +106,7 @@ export default function Login() {
 
 
 
-        <div className="flex justify-center mt-6 text-xs">New to MyApp?<Link href="signin" className="ml-[4px] text-[#2B4C8C]">Sign Up</Link></div>
+        <div className="flex justify-center mt-6 text-xs">New to MyApp?<Link href="/" className="ml-[4px] text-[#2B4C8C]">Sign Up</Link></div>
 
       </div>
     </div>
