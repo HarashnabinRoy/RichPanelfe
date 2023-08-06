@@ -1,18 +1,17 @@
 'use client'
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCreditCard } from "@fortawesome/free-regular-svg-icons";
 import Link from "next/link";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
+import { useRouter } from "next/navigation";
+import axios from "axios";
 
 
 export default function PaymentForm() {
 
     const stripe = useStripe();
     const elements = useElements();
-    const name = "Harashnabin Roy";
-    const email = "hello@gmail.com";
-
 
     const token = JSON.parse(localStorage.getItem('authorization')); 
     const createSubscription = async () => {
@@ -21,33 +20,70 @@ export default function PaymentForm() {
             card: elements.getElement("card"),
             type: "card",
           });
+          console.log(planID);
           console.log(paymentMethod.paymentMethod.id);
-          const response = await fetch("https://richpanel-apis.onrender.com/api/subscribe/ok", {
-            method: "POST",
+          const data1 = {
+            planId: planID,
+            paymentMethod: paymentMethod.paymentMethod.id
+          };
+
+          const response = await axios.post("https://richpanel-apis.onrender.com/api/subscribe/ok", data1, {
             headers: {
               "authorization": token,
-              "Content-Type": "application/json",
             },
-            
-            body: JSON.stringify({
-
-              name,
-              email,
-              paymentMethod: paymentMethod.paymentMethod.id,
-            }),
           });
-          if (!response.ok) return alert("Payment unsuccessful!");
-          const data = await response.json();
-          const confirm = await stripe.confirmCardPayment(data.clientSecret);
+          
+          console.log("2");
+          console.log(response);
+          
+          console.log(planID);
+          if (response.status!=200) return alert("Payment unsuccessful!");
+          // const data = await response.data;
+          console.log(response.data.clientSecret);
+          const confirm = await stripe.confirmCardPayment(response.data.clientSecret);
+          
           console.log(confirm);
           if (confirm.error) return alert("Payment unsuccessful!");
-          alert("Payment Successful! Subscription active.");
+          console.log("1");
+          console.log(response.data);
+          const data2={
+            PlanId: planID,
+            StripeSubscriptionId: response.data.subscriptionId,
+          }
+
+          const res = await axios.post("https://richpanel-apis.onrender.com/api/subscribe/paymentSuccess",data2, {
+            headers: {
+              "authorization": token,
+            },
+            // body: JSON.stringify({
+            //   planId: planID,
+            //   StripeSubscriptionId: response.data.subscriptionId,
+            // }),
+          });
+          console.log(res.data);
+          if(res.status==201)
+            alert("Payment Successful! Subscription active.");
         } catch (err) {
           console.error(err);
           alert("Payment failed! " + err.message);
         }
       };
 
+    const [planName, setPlanName] = useState('');
+    const [cycle, setCycle] = useState('');
+    const [price, setPrice] = useState('');
+    const [planID, setPlanID] = useState('');
+
+    useEffect(() => {
+      const planID = localStorage.getItem('planID');
+      const cycle = localStorage.getItem('planType');
+      const price = localStorage.getItem('price');
+      const type = localStorage.getItem('type');
+      setPlanID(planID);
+      setCycle(cycle);
+      setPrice(price);
+      setPlanName(type);
+    }, []);
 
     return(
         <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center">
@@ -77,17 +113,17 @@ export default function PaymentForm() {
                     <div className="mb-4 text-lg font-medium">Order Summary</div>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Plan Name</div>
-                        <div className="font-medium">Basic</div>
+                        <div className="font-medium">{price}</div>
                     </div>
                     <hr className="w-full my-2"/>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Billing Cycle</div>
-                        <div className="font-medium">Monthly</div>
+                        <div className="font-medium">{cycle}</div>
                     </div>
                     <hr className="w-full my-2"/>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Plan price</div>
-                        <div className="font-medium">₹200/mo</div>
+                        <div className="font-medium">₹{planName}/mo</div>
                     </div>
                     <hr className="w-full my-2"/>
                 </div>

@@ -18,7 +18,7 @@ export default function Home() {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      // console.log(name,email,password);
+      console.log(name,email,password);
       const response = await axios.post('https://richpanel-apis.onrender.com/api/user/signUp', {
         name: name,
         email: email,
