@@ -134,17 +134,17 @@ export default function PaymentForm() {
                     <div className="mb-4 text-lg font-medium">Order Summary</div>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Plan Name</div>
-                        <div className="font-medium">{price}</div>
+                        <div className="font-medium">{price===""?"Plan Not Selected":`${price}`}</div>
                     </div>
                     <hr className="w-full my-2"/>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Billing Cycle</div>
-                        <div className="font-medium">{cycle}</div>
+                        <div className="font-medium">{cycle===""?"Plan Not Selected":`${cycle}`}</div>
                     </div>
                     <hr className="w-full my-2"/>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Plan price</div>
-                        <div className="font-medium">₹{planName}/{planName >= 900 ? 'yr' : 'mo' }</div>
+                        <div className="font-medium">{planName===""?"Plan Not Selected":`₹${planName}`}/{planName >= 900 ? 'yr' : 'mo' }</div>
                     </div>
                     <hr className="w-full my-2"/>
                 </div>

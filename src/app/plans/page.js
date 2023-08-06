@@ -54,9 +54,9 @@ export default function Home() {
         setPrice(price);
         setType(type);
     };
-    console.log(selectedButton);
-    console.log(price);
-    console.log(type);
+    // console.log(selectedButton);
+    // console.log(price);
+    // console.log(type);
     let token;
     if (typeof window !== 'undefined') {
       token = JSON.parse(localStorage.getItem('authorization')); 
