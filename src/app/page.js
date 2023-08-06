@@ -67,6 +67,7 @@ export default function Home() {
             className="w-full px-4 py-2 rounded-lg border border-gray-300 focus:outline-none focus:border-blue-500"
             value={email}
             onChange={(e) => setEmail(e.target.value)}
+            placeholder="email@email.com"
           />
         </div>
 
