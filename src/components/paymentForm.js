@@ -84,18 +84,21 @@ export default function PaymentForm() {
 
     useEffect(() => {
       let token;
+      let planID;
+      let cycle;
+      let price;
+      let type;
       if (typeof window !== 'undefined') {
-      
-      
-        const planID = localStorage.getItem('planID');
-        const cycle = localStorage.getItem('planType');
-        const price = localStorage.getItem('price');
-        const type = localStorage.getItem('type');
+        planID = localStorage.getItem('planID');
+        cycle = localStorage.getItem('planType');
+        price = localStorage.getItem('price');
+        type = localStorage.getItem('type');
+        
+      }
         setPlanID(planID);
         setCycle(cycle);
         setPrice(price);
         setPlanName(type);
-      }
     }, []);
 
     return(
