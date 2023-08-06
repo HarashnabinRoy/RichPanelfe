@@ -147,28 +147,28 @@ export default function Home() {
                                     {item.type}
                                 </button>
 
-                            <div className="flex ml-4 mt-10">
+                            <div className={`flex ml-4 mt-10 ${selectedButton===item.id? 'font-bold text-[#2B4C8C]':'text-black'}`}>
                                 ₹ {item.cost}
                             </div>
                             <hr className="w-full my-4"/>
-                            <div className="flex ml-4">
+                            <div className={`flex ml-4 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.quality}
                             </div>
                             <hr className="w-full my-4"/>
-                            <div className="flex ml-4">
+                            <div className={`flex ml-4 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.resolution}
                             </div>
                             <hr className="w-full my-4"/>
-                            <div className="flex ml-4">
+                            <div className={`flex ml-4 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.devices1}
                             </div>
-                            <div className="flex ml-4 mt-6">
+                            <div className={`flex ml-4 mt-6 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.devices2}
                             </div>
-                            <div className="flex ml-4 mt-6">
+                            <div className={`flex ml-4 mt-6 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.devices3}
                             </div>
-                            <div className="flex ml-4 mt-6">
+                            <div className={`flex ml-4 mt-6 ${selectedButton===item.id? 'text-[#2B4C8C] font-bold':'text-black'}`}>
                                 {item.devices4}
                             </div>
                         </div>
