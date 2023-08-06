@@ -15,19 +15,27 @@ export default function Home() {
     const [yearlyTextColor,setYearlyTextColor] = useState('#ffffff');
     const [selectPayment,setSelectPayment]=useState('');
     const [selectedButton, setSelectedButton] = useState(''); //Plan ID
-    const [selectedPlan,setSelectedPlan]=useState('Monthly'); //Monthly Yearly
+    let [selectedPlan,setSelectedPlan]=useState('Monthly'); //Monthly Yearly
     const [price,setPrice] = useState('');
     const [type,setType] = useState('');
     const [yearlyPlan,setYearlyPlan] = useState('');
     const [monthlyPlan,setMonthlyPlan] = useState('');
     
- 
+    const handleSelectedPlanMonthly =() =>{
+        selectedPlan = "Monthly"
+        setSelectedPlan('Monthly')
+    }
+    const handleSelectedPlanYearly = () => {
+        selectedPlan = "Yearly"
+        setSelectedPlan('Yearly')
+
+    }
+
     const handlePlanTypeMonthly = () => {
         setMonthlyColor("#ffffff");
         setYearlyColor("#2B4C8C");
         setMonthlyTextColor("#2B4C8C");
         setYearlyTextColor("#ffffff");
-        setSelectedPlan("Monthly");
     }
 
     const handlePlanTypeYearly = () => {
@@ -35,7 +43,6 @@ export default function Home() {
         setYearlyColor("#ffffff");
         setMonthlyTextColor("#ffffff");
         setYearlyTextColor("#2B4C8C");
-        setSelectedPlan("Yearly");
     }
 
     console.log(selectedPlan);
@@ -48,8 +55,11 @@ export default function Home() {
     console.log(selectedButton);
     console.log(price);
     console.log(type);
-
-        const token = JSON.parse(localStorage.getItem('authorization'));
+    let token;
+    if (typeof window !== 'undefined') {
+      token = JSON.parse(localStorage.getItem('authorization')); 
+    }
+        // const token = JSON.parse(localStorage.getItem('authorization'));
         const [responseData, setResponseData] = useState(data);
         useEffect(() => {
             handleMonthlyButtonClick();
@@ -57,7 +67,7 @@ export default function Home() {
       
         const handleMonthlyButtonClick = async () => {
           try {
-            const response = await axios.get('https://richpanel-apis.onrender.com/api/plan/getplans', {
+            const response = await axios.get('https://richpanelbe-production.up.railway.app/api/plan/getplans', {
                 headers: {
                     authorization: token,
                 },
@@ -95,8 +105,8 @@ export default function Home() {
                     <div className="text-xs flex flex-col w-[250px]">
                         <div className="py-3 bg-white">
                             <div className="flex flex-row bg-[#2B4C8C] gap-3 px-2 py-3 rounded-3xl w-[150px]">
-                                <div style={{backgroundColor:monthlyColor, color:monthlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-2 py-2 rounded-3xl font-medium"><button onClick={() => {handlePlanTypeMonthly(); handleMonthlyButtonClick();}}>Monthly</button></div>
-                                <div style={{backgroundColor:yearlyColor, color:yearlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-3 py-2 rounded-3xl text-white font-medium"><button onClick={() => {handlePlanTypeYearly(); handleMonthlyButtonClick();}}>Yearly</button></div>
+                                <div style={{backgroundColor:monthlyColor, color:monthlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-2 py-2 rounded-3xl font-medium"><button onClick={() => {handlePlanTypeMonthly(); handleSelectedPlanMonthly(); handleMonthlyButtonClick();}}>Monthly</button></div>
+                                <div style={{backgroundColor:yearlyColor, color:yearlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-3 py-2 rounded-3xl text-white font-medium"><button onClick={() => {handlePlanTypeYearly(); handleSelectedPlanYearly(); handleMonthlyButtonClick();}}>Yearly</button></div>
                                 {/* <button onClick={handleSetYearly}>{yearly ? 'Yearly':'Monthly'}</button> */}
                             </div>
                         </div>

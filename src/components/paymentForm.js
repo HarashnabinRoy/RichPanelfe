@@ -13,8 +13,11 @@ export default function PaymentForm() {
     const stripe = useStripe();
     const elements = useElements();
     const router = useRouter();
-
-    const token = JSON.parse(localStorage.getItem('authorization')); 
+    let token;
+    if (typeof window !== 'undefined') {
+      token = JSON.parse(localStorage.getItem('authorization')); 
+    }
+    
     const createSubscription = async () => {
         try {
           const paymentMethod = await stripe.createPaymentMethod({
@@ -28,7 +31,7 @@ export default function PaymentForm() {
             paymentMethod: paymentMethod.paymentMethod.id
           };
 
-          const response = await axios.post("https://richpanel-apis.onrender.com/api/subscribe/ok", data1, {
+          const response = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/ok", data1, {
             headers: {
               "authorization": token,
             },
@@ -52,7 +55,7 @@ export default function PaymentForm() {
             StripeSubscriptionId: response.data.subscriptionId,
           }
 
-          const res = await axios.post("https://richpanel-apis.onrender.com/api/subscribe/paymentSuccess",data2, {
+          const res = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/paymentSuccess",data2, {
             headers: {
               "authorization": token,
             },
@@ -80,14 +83,19 @@ export default function PaymentForm() {
     const [planID, setPlanID] = useState('');
 
     useEffect(() => {
-      const planID = localStorage.getItem('planID');
-      const cycle = localStorage.getItem('planType');
-      const price = localStorage.getItem('price');
-      const type = localStorage.getItem('type');
-      setPlanID(planID);
-      setCycle(cycle);
-      setPrice(price);
-      setPlanName(type);
+      let token;
+      if (typeof window !== 'undefined') {
+      
+      
+        const planID = localStorage.getItem('planID');
+        const cycle = localStorage.getItem('planType');
+        const price = localStorage.getItem('price');
+        const type = localStorage.getItem('type');
+        setPlanID(planID);
+        setCycle(cycle);
+        setPrice(price);
+        setPlanName(type);
+      }
     }, []);
 
     return(

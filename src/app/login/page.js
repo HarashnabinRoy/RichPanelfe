@@ -7,8 +7,8 @@ import { useRouter } from "next/navigation";
 export default function Login() {
     // const rememberCheck = useRef(null);
 
-    const [email, setEmail] = useState(localStorage.getItem("my-email") || "");
-    const [password, setPassword] = useState(localStorage.getItem("my-password") || "");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
     const router = useRouter();
 
@@ -27,7 +27,7 @@ export default function Login() {
       e.preventDefault();
       try {
         console.log(email,password);
-        const response = await axios.post('https://richpanel-apis.onrender.com/api/user/login', {
+        const response = await axios.post('https://richpanelbe-production.up.railway.app/api/user/login', {
           email,
           password,
         });

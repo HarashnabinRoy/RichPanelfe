@@ -4,6 +4,7 @@ import React,{ useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
 
+//richpanelbe-production.up.railway.app
 
 
 export default function Home() {
@@ -19,7 +20,7 @@ export default function Home() {
     e.preventDefault();
     try {
       console.log(name,email,password);
-      const response = await axios.post('https://richpanel-apis.onrender.com/api/user/signUp', {
+      const response = await axios.post('https://richpanelbe-production.up.railway.app/api/user/signUp', {
         name: name,
         email: email,
         password: password,

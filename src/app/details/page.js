@@ -4,7 +4,7 @@ import Link from "next/link"
 import axios from "axios"
 
 export default function Details() {
-    const [responseData, setResponseData] = useState(null);
+    // const [responseData, setResponseData] = useState(null);
     const [plan,setPlan] = useState('dummy');
     const [devices,setDevices] = useState('dummy+dummy');
     const [price,setPrice] = useState('dummy');
@@ -17,8 +17,11 @@ export default function Details() {
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
 
-
-    const token = JSON.parse(localStorage.getItem('authorization')); 
+    let token;
+    if (typeof window !== 'undefined') {
+      token = JSON.parse(localStorage.getItem('authorization')); 
+    }
+    // const token = JSON.parse(localStorage.getItem('authorization')); 
     // console.log(token);
     useEffect(() => {
         apiCaller();
@@ -26,7 +29,7 @@ export default function Details() {
     const apiCaller = async () => {
         // e.preventDefault();
         try{
-            const response = await axios.get("https://richpanel-apis.onrender.com/api/subscribe/subscriptionDetails", {
+            const response = await axios.get("https://richpanelbe-production.up.railway.app/api/subscribe/subscriptionDetails", {
                 headers: {
                   authorization: token,
                 },
@@ -54,11 +57,14 @@ export default function Details() {
     //     cancelButtonHandler();
     // },[]);
     const cancelButtonHandler = async () => {
-        
-        const token = JSON.parse(localStorage.getItem('authorization')); 
+        let token;
+        if (typeof window !== 'undefined') {
+          token = JSON.parse(localStorage.getItem('authorization')); 
+        }
+        // const token = JSON.parse(localStorage.getItem('authorization')); 
         console.log(token);
         try{
-            const response = await axios.post("https://richpanel-apis.onrender.com/api/subscribe/cancelSubscription",{}, {
+            const response = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/cancelSubscription",{}, {
                 headers: {
                   authorization: token,
                 },
@@ -103,7 +109,7 @@ export default function Details() {
                 </button>
             </Link>
             <div className="bg-[#F5F5F7] mt-4 p-4 w-[600px]">
-                Your Subscription {isCancelButtonDisabled ? 'has ended' : `has started on ${startDate} and will auto renew on ${endDate}.`}.
+                Your Subscription {isCancelButtonDisabled ? 'has ended' : `has started on ${startDate} and will auto renew on ${endDate}`}.
             </div>
         </div>
 
