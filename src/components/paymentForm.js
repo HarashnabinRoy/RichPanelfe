@@ -12,6 +12,7 @@ export default function PaymentForm() {
 
     const stripe = useStripe();
     const elements = useElements();
+    const router = useRouter();
 
     const token = JSON.parse(localStorage.getItem('authorization')); 
     const createSubscription = async () => {
@@ -61,8 +62,12 @@ export default function PaymentForm() {
             // }),
           });
           console.log(res.data);
-          if(res.status==201)
+          if(res.status==201){
             alert("Payment Successful! Subscription active.");
+            router.push('/details');
+          }
+
+
         } catch (err) {
           console.error(err);
           alert("Payment failed! " + err.message);
@@ -123,7 +128,7 @@ export default function PaymentForm() {
                     <hr className="w-full my-2"/>
                     <div className="flex flex-row justify-between w-[300px] text-sm">
                         <div>Plan price</div>
-                        <div className="font-medium">₹{planName}/mo</div>
+                        <div className="font-medium">₹{planName}/{planName >= 900 ? 'yr' : 'mo' }</div>
                     </div>
                     <hr className="w-full my-2"/>
                 </div>
