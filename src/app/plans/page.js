@@ -3,6 +3,7 @@ import Link from "next/link";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import { headers } from "../../../next.config";
+import Loading from "@/components/shared/loader";
 
 const data = []
 
@@ -20,6 +21,7 @@ export default function Home() {
     const [type,setType] = useState('');
     const [yearlyPlan,setYearlyPlan] = useState('');
     const [monthlyPlan,setMonthlyPlan] = useState('');
+    const [loading, setLoading] = useState(false);
     
     const handleSelectedPlanMonthly =() =>{
         selectedPlan = "Monthly"
@@ -67,6 +69,7 @@ export default function Home() {
       
         const handleMonthlyButtonClick = async () => {
           try {
+            setLoading(true);
             const response = await axios.get('https://richpanelbe-production.up.railway.app/api/plan/getplans', {
                 headers: {
                     authorization: token,
@@ -77,6 +80,7 @@ export default function Home() {
             } else {
                 setResponseData(response.data.plans.yearlyPlans);
             }
+            setLoading(false);
             // setMonthlyPlan(response.data.plans.monthlyPlans);
             // setYearlyPlan(response.data.plans.yearlyPlans);
 
@@ -98,12 +102,14 @@ export default function Home() {
 
 
     return(
-        <div className="min-h-screen flex justify-center ">
+        <div className="min-h-screen flex justify-center flex-col gap-10">
+            {loading && <Loading />}
             <div className="flex justify-center items-center flex-col">
                 <div className="mb-8 text-xl font-semibold">Choose the right plan for you</div>
                 <div className="flex flex-row "> 
                     <div className="text-xs flex flex-col w-[250px]">
                         <div className="py-3 bg-white">
+                            
                             <div className="flex flex-row bg-[#2B4C8C] gap-3 px-2 py-3 rounded-3xl w-[150px]">
                                 <div style={{backgroundColor:monthlyColor, color:monthlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-2 py-2 rounded-3xl font-medium"><button onClick={() => {handlePlanTypeMonthly(); handleSelectedPlanMonthly(); handleMonthlyButtonClick();}}>Monthly</button></div>
                                 <div style={{backgroundColor:yearlyColor, color:yearlyTextColor}} className="transition ease-in-out delay-150 duration-300 px-3 py-2 rounded-3xl text-white font-medium"><button onClick={() => {handlePlanTypeYearly(); handleSelectedPlanYearly(); handleMonthlyButtonClick();}}>Yearly</button></div>
@@ -131,9 +137,9 @@ export default function Home() {
                     
                     {responseData.map((item) => (
 
-                        
-                        <div key={item.id} className="text-xs flex flex-col w-[100px]">
 
+                        <div key={item.id} className="text-xs flex flex-col w-[100px]">
+                                
                                 <button key={item.id} onClick={()=>handleButtonClick(item.id,item.type,item.cost)}
                                 className={`text-white px-4 py-8 text-center w-[80px] ${
                                     selectedButton === item.id ? 'bg-[#2B4C8C]' : 'bg-[#7E93BA]'

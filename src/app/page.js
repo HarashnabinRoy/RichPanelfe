@@ -3,29 +3,34 @@ import Link from "next/link";
 import React,{ useState } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/shared/loader";
 
 //richpanelbe-production.up.railway.app
 
 
 export default function Home() {
+  
 
 
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [rememberMe, setRememberMe] = useState(false);
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
       console.log(name,email,password);
+      setLoading(true);
       const response = await axios.post('https://richpanelbe-production.up.railway.app/api/user/signUp', {
         name: name,
         email: email,
         password: password,
 
       });
+      setLoading(false);
       console.log(response)
       if (response.status === 201) {
         router.push('/login');
@@ -38,8 +43,9 @@ export default function Home() {
 
 
   return (
-    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center">
-      <div className="flex bg-white rounded-2xl p-12 flex-col">
+    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col gap-10">
+      {loading && <Loading />}
+      <div className="flex bg-white rounded-2xl p-12 flex-col">    
         <div className="flex justify-center mb-6 text-xl">Create Account</div>
         <form onSubmit={handleSignUp}>
 

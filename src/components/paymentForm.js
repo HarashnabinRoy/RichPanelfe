@@ -6,10 +6,13 @@ import Link from "next/link";
 import { CardElement, useElements, useStripe } from "@stripe/react-stripe-js";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import Loading from "@/components/shared/loader";
+
 
 
 export default function PaymentForm() {
 
+    const [loading, setLoading] = useState(false);
     const stripe = useStripe();
     const elements = useElements();
     const router = useRouter();
@@ -20,6 +23,7 @@ export default function PaymentForm() {
     
     const createSubscription = async () => {
         try {
+          setLoading(true);
           const paymentMethod = await stripe.createPaymentMethod({
             card: elements.getElement("card"),
             type: "card",
@@ -30,12 +34,14 @@ export default function PaymentForm() {
             planId: planID,
             paymentMethod: paymentMethod.paymentMethod.id
           };
-
+          
           const response = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/ok", data1, {
             headers: {
               "authorization": token,
             },
           });
+          
+          
           
           console.log("2");
           console.log(response);
@@ -54,7 +60,7 @@ export default function PaymentForm() {
             PlanId: planID,
             StripeSubscriptionId: response.data.subscriptionId,
           }
-
+          
           const res = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/paymentSuccess",data2, {
             headers: {
               "authorization": token,
@@ -64,6 +70,8 @@ export default function PaymentForm() {
             //   StripeSubscriptionId: response.data.subscriptionId,
             // }),
           });
+          setLoading(false);
+          
           console.log(res.data);
           if(res.status==201){
             alert("Payment Successful! Subscription active.");
@@ -74,6 +82,7 @@ export default function PaymentForm() {
         } catch (err) {
           console.error(err);
           alert("Payment failed! " + err.message);
+          router.push('/plans');
         }
       };
 
@@ -102,7 +111,8 @@ export default function PaymentForm() {
     }, []);
 
     return(
-        <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center">
+        <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col gap-10">
+              {loading && <Loading />}
             <div className="flex flex-row">
                 <div className="flex bg-white p-8 rounded-l-xl flex-col">
                     <div className="text-2xl font-medium">Complete Payment</div>

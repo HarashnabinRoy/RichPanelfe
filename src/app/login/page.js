@@ -3,6 +3,9 @@ import Link from "next/link";
 import React, { useState, useRef } from "react";
 import axios from "axios";
 import { useRouter } from "next/navigation";
+import Loading from "@/components/shared/loader";
+
+
 
 export default function Login() {
     // const rememberCheck = useRef(null);
@@ -10,6 +13,8 @@ export default function Login() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [rememberMe, setRememberMe] = useState(false);
+    const [loading, setLoading] = useState(false);
+
     const router = useRouter();
 
     // const handleRememberMe = () => {
@@ -27,10 +32,12 @@ export default function Login() {
       e.preventDefault();
       try {
         console.log(email,password);
+        setLoading(true);
         const response = await axios.post('https://richpanelbe-production.up.railway.app/api/user/login', {
           email,
           password,
         });
+        setLoading(false);
 
         console.log(response.data.token);
 
@@ -50,8 +57,10 @@ export default function Login() {
     }
 
   return (
-    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center">
+    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col gap-10">
+      {loading && <Loading />}
       <div className="flex bg-white rounded-2xl p-12 flex-col">
+
         <div className="flex justify-center mb-6 text-xl">Login to your account</div>
         <form onSubmit={handleLogin}>
           <div className="mb-4">

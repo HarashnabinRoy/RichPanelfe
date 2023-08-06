@@ -2,13 +2,14 @@
 import React, { useEffect, useState } from "react"
 import Link from "next/link"
 import axios from "axios"
+import Loading from "@/components/shared/loader";
 
 export default function Details() {
     // const [responseData, setResponseData] = useState(null);
-    const [plan,setPlan] = useState('dummy');
-    const [devices,setDevices] = useState('dummy+dummy');
-    const [price,setPrice] = useState('dummy');
-    const [planType,setPlanType] = useState('dummy');
+    const [plan,setPlan] = useState('');
+    const [devices,setDevices] = useState('');
+    const [price,setPrice] = useState('');
+    const [planType,setPlanType] = useState('');
     const [cancelBgColor,setCancelBgColor] = useState('rgb(187 247 208)');
     const [cancelText,setCancelText] = useState('Active');
     const [cancelTextColor,setCancelTextColor] = useState('')
@@ -16,6 +17,7 @@ export default function Details() {
     const [changePlanButton,setChangePlanButton] = useState('Change Plan');
     const [startDate,setStartDate] = useState('');
     const [endDate,setEndDate] = useState('');
+    const [loading, setLoading] = useState(false);
 
     let token;
     if (typeof window !== 'undefined') {
@@ -29,6 +31,7 @@ export default function Details() {
     const apiCaller = async () => {
         // e.preventDefault();
         try{
+            setLoading(true);
             const response = await axios.get("https://richpanelbe-production.up.railway.app/api/subscribe/subscriptionDetails", {
                 headers: {
                   authorization: token,
@@ -46,8 +49,10 @@ export default function Details() {
             
 
         
-            
-        } catch (err) {
+            setLoading(false);
+        } 
+        
+        catch (err) {
             console.error(err);
             console.error('Error calling API:', err.message);
           }
@@ -64,6 +69,7 @@ export default function Details() {
         // const token = JSON.parse(localStorage.getItem('authorization')); 
         console.log(token);
         try{
+            setLoading(true);
             const response = await axios.post("https://richpanelbe-production.up.railway.app/api/subscribe/cancelSubscription",{}, {
                 headers: {
                   authorization: token,
@@ -77,6 +83,7 @@ export default function Details() {
         setCancelText('Cancelled');
         setChangePlanButton("Choose Plan");
         
+        setLoading(false);
 
         } catch (err) {
             console.error(err);
@@ -87,7 +94,8 @@ export default function Details() {
 
 
   return (
-    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col">
+    <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col gap-10">
+        {loading && <Loading />}
         <div className="bg-white rounded-lg p-4">
             <div className="flex flex-row justify-between">
                 <div>Current Plan Details<span style={{backgroundColor:cancelBgColor, color:cancelTextColor}} className="text-xs ml-4 px-2 py-1 text-green-600 rounded-sm">{cancelText}</span></div>
