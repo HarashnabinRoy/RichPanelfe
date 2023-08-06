@@ -107,21 +107,16 @@ export default function PaymentForm() {
                 <div className="flex bg-white p-8 rounded-l-xl flex-col">
                     <div className="text-2xl font-medium">Complete Payment</div>
                     <div className="text-xs mb-8  text-gray-500">Enter your credit or debit card details below</div>
-                    {/* <div className="mb-8 flex flex-row border border-gray-500 rounded-md justify-between"> */}
                             <div style={{width:["400px"], marginBottom:"1rem", borderWidth:"1px", padding:"6px", borderRadius:"0.375rem", borderColor: "rgb(107 114 128)"}}>
                                 <CardElement />
                             </div>
-
-                    {/* </div> */}
                     <div>
-                    {/* <Link href="details"> */}
                         <button
                             className="bg-[#2B4C8C] text-white px-4 py-2 rounded-sm text-[#F5F5F7] text-xs" 
                             onClick={createSubscription}
                             >
                             Confirm Payment
                         </button>
-                    {/* </Link> */}
 
                     </div>
                 </div>
