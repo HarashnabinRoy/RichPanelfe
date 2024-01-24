@@ -14,13 +14,13 @@ export default function Home() {
     const [monthlyTextColor,setMonthlyTextColor] = useState('#2B4C8C');
     const [yearlyColor,setYearlyColor] = useState('');
     const [yearlyTextColor,setYearlyTextColor] = useState('#ffffff');
-    const [selectPayment,setSelectPayment]=useState('');
+    // const [selectPayment,setSelectPayment]=useState(''); 
     const [selectedButton, setSelectedButton] = useState(''); //Plan ID
     let [selectedPlan,setSelectedPlan]=useState('Monthly'); //Monthly Yearly
     const [price,setPrice] = useState('');
     const [type,setType] = useState('');
-    const [yearlyPlan,setYearlyPlan] = useState('');
-    const [monthlyPlan,setMonthlyPlan] = useState('');
+    // const [yearlyPlan,setYearlyPlan] = useState('');
+    // const [monthlyPlan,setMonthlyPlan] = useState('');
     const [loading, setLoading] = useState(false);
     
     const handleSelectedPlanMonthly =() =>{

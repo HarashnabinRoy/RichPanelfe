@@ -50,9 +50,9 @@ export default function PaymentForm() {
           if (response.status!=200) return alert("Payment unsuccessful!");
           // const data = await response.data;
           console.log(response.data.clientSecret);
-          const confirm = await stripe.confirmCardPayment(response.data.clientSecret);
+          const confirm = await stripe.confirmCardPayment(response.data.clientSecret); //sending confirmation ot stripe
           
-          console.log(confirm);
+          console.log(confirm); //return promise
           if (confirm.error) return alert("Payment unsuccessful!");
           console.log("1");
           console.log(response.data);
