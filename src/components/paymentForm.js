@@ -122,7 +122,7 @@ export default function PaymentForm() {
                             </div>
                     <div>
                         <button
-                            className="bg-[#2B4C8C] text-white px-4 py-2 rounded-sm text-[#F5F5F7] text-xs" 
+                            className="bg-[#2B4C8C] text-white px-4 py-2 rounded-sm text-xs" 
                             onClick={createSubscription}
                             >
                             Confirm Payment

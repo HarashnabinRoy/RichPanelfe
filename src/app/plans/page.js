@@ -90,7 +90,7 @@ export default function Home() {
             console.error('Error calling API:', error.message);
           }
         };
-        console.log(monthlyPlan,yearlyPlan);
+        // console.log(monthlyPlan,yearlyPlan);
 
         const handleNexButton = () => {
             localStorage.setItem('planID', selectedButton);
