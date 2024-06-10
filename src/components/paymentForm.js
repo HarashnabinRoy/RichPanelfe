@@ -113,10 +113,13 @@ export default function PaymentForm() {
     return(
         <div className="bg-[#2B4C8C] flex min-h-screen justify-center items-center flex-col gap-10">
               {loading && <Loading />}
+
             <div className="flex flex-row">
                 <div className="flex bg-white p-8 rounded-l-xl flex-col">
                     <div className="text-2xl font-medium">Complete Payment</div>
                     <div className="text-xs mb-8  text-gray-500">Enter your credit or debit card details below</div>
+                    <div className="text-xs mb-8  text-gray-500">To test use: 4242 4242 4242 4242 CvC:Any Date: Any Future Date</div>
+                    <div className="text-xs mb-8  text-gray-500">or use: 5555 5555 5555 4444 CvC:Any Date: Any Future Date</div>
                             <div style={{width:["400px"], marginBottom:"1rem", borderWidth:"1px", padding:"6px", borderRadius:"0.375rem", borderColor: "rgb(107 114 128)"}}>
                                 <CardElement />
                             </div>
